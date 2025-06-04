@@ -52,9 +52,19 @@ class GameTest {
     }
 
     @Test
-    void returnSolvedResultIf2Strkies0Balls() {
+    void returnSolvedResultIf2Strkies0Ball() {
         generateQuestion("123");
         assertMatchedNumber(game.guess("125"), false, 2, 0);
+    }
+    @Test
+    void returnSolvedResultIf0Ball2Strkies() {
+        generateQuestion("123");
+        assertMatchedNumber(game.guess("523"), false, 2, 0);
+    }
+    @Test
+    void returnSolvedResultIf1Strkie0Ball1Strkie() {
+        generateQuestion("123");
+        assertMatchedNumber(game.guess("143"), false, 2, 0);
     }
 
     private void assertMatchedNumber(GuessResult result, boolean solved, int strikes, int balls) {

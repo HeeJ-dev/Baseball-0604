@@ -6,17 +6,7 @@ public class Game {
         if(guessNumber.equals(question)){
             return new GuessResult(true, 3, 0);
         }
-        else if(getStrikesCount(guessNumber) == 2) {
-            if(getBallsCount(guessNumber) == 0 ) {
-                return new GuessResult(false, 2, 0);
-            }
-            else {
-                return new GuessResult(false, 2, 1);
-            }
-        }
-        else {
-            return new GuessResult(false, 0, 0);
-        }
+        return new GuessResult(false, getStrikesCount(guessNumber), getBallsCount(guessNumber));
     }
 
     private void assertIllegalArgument(String guessNumber) {
@@ -46,25 +36,26 @@ public class Game {
     }
 
     private int getStrikesCount(String guessNumber) {
-        int count = 0;
-        if(guessNumber.charAt(0) == question.charAt(0)) count++;
-        if(guessNumber.charAt(1) == question.charAt(1)) count++;
-        if(guessNumber.charAt(2) == question.charAt(2)) count++;
-        return count;
+        int strikeCount = 0;
+        for(int i=0; i<3; i++) {
+            if(guessNumber.charAt(i) == question.charAt(i))
+                strikeCount++;
+        }
+        return strikeCount;
     }
 
     private int getBallsCount(String guessNumber) {
-        int count = 0;
-        if(guessNumber.charAt(0) == question.charAt(1)
-        || guessNumber.charAt(0) == question.charAt(2))
-            count++;
-        if(guessNumber.charAt(1) == question.charAt(0)
-        || guessNumber.charAt(1) == question.charAt(2))
-            count++;
-        if(guessNumber.charAt(2) == question.charAt(0)
-        || guessNumber.charAt(2) == question.charAt(1))
-            count++;
+        int totalContainCount = getTotalContainCount(guessNumber);
+        return totalContainCount - getStrikesCount(guessNumber);
+    }
 
-        return count;
+    private int getTotalContainCount(String guessNumber) {
+        int totalContainCount = 0;
+        for(int i=0; i<3; i++) {
+            if(question.contains(String.valueOf(guessNumber.charAt(i)))){
+                totalContainCount++;
+            }
+        }
+        return totalContainCount;
     }
 }
