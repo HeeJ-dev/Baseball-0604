@@ -45,11 +45,16 @@ class GameTest {
         assertMatchedNumber(game.guess("123"), true, 3, 0);
     }
 
-
     @Test
     void returnSolvedResultIfUnMatchedNumber() {
         generateQuestion("123");
         assertMatchedNumber(game.guess("456"), false, 0, 0);
+    }
+
+    @Test
+    void returnSolvedResultIf2Strkies0Balls() {
+        generateQuestion("123");
+        assertMatchedNumber(game.guess("125"), false, 2, 0);
     }
 
     private void assertMatchedNumber(GuessResult result, boolean solved, int strikes, int balls) {
